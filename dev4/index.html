@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vahan Asoyan — Bartender & Cocktail Artist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000000;
+      --surface: #0c0c0c;
+      --border: #2a2a2a;
+      --text: #f2f2f2;
+      --muted: #777777;
+      --accent: #ffffff;
+      --accent-dim: rgba(255,255,255,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; letter-spacing: .12em;
+      color: var(--accent); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: .78rem; letter-spacing: .15em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+    }
+    .hero-label {
+      font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300; line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-desc {
+      color: var(--muted); max-width: 420px;
+      font-size: .95rem; margin-bottom: 2.5rem;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .85rem 2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent); text-decoration: none;
+      font-size: .78rem; letter-spacing: .15em; text-transform: uppercase;
+      transition: background .25s, color .25s;
+      width: fit-content;
+    }
+    .btn:hover { background: var(--accent); color: #000; }
+    .hero-img {
+      position: relative; overflow: hidden;
+    }
+    .hero-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.7) contrast(1.15);
+    }
+    .hero-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 40%);
+    }
+
+    /* ── SECTION WRAPPER ── */
+    section { padding: 6rem 5rem; }
+    .section-label {
+      font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300;
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .divider {
+      width: 48px; height: 1px;
+      background: var(--accent); margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+      align-items: center;
+    }
+    .about-images {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .about-images img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      filter: brightness(.75);
+    }
+    .about-images img:first-child {
+      grid-row: span 2; aspect-ratio: unset; height: 100%;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1.2rem; font-size: .95rem; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 2.5rem;
+      padding-top: 2.5rem; border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 300; color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-top: .4rem;
+    }
+
+    /* ── GALLERY STRIP ── */
+    .gallery-strip {
+      padding: 0; overflow: hidden;
+      display: flex; gap: 4px;
+    }
+    .gallery-strip img {
+      flex: 1; min-width: 0;
+      height: 340px; object-fit: cover;
+      filter: brightness(.65);
+      transition: flex .5s ease, filter .4s;
+    }
+    .gallery-strip img:hover {
+      flex: 2.5; filter: brightness(.95);
+    }
+
+    /* ── COCKTAILS ── */
+    .cocktails-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .cocktail-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    }
+    .cocktail-card {
+      position: relative; overflow: hidden; cursor: pointer;
+      aspect-ratio: 3/4;
+    }
+    .cocktail-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.55);
+      transition: transform .6s ease, filter .4s;
+    }
+    .cocktail-card:hover img {
+      transform: scale(1.06);
+      filter: brightness(.35);
+    }
+    .cocktail-info {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%);
+    }
+    .cocktail-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; margin-bottom: .25rem;
+    }
+    .cocktail-tag {
+      font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .cocktail-recipe {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 2rem;
+      background: rgba(0,0,0,.95);
+      opacity: 0; transition: opacity .4s;
+    }
+    .cocktail-card:hover .cocktail-recipe { opacity: 1; }
+    .cocktail-recipe h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem;
+    }
+    .recipe-section { margin-bottom: 1rem; }
+    .recipe-section h4 {
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .5rem;
+    }
+    .recipe-section ul { list-style: none; }
+    .recipe-section ul li {
+      font-size: .82rem; color: var(--muted);
+      padding: .2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .recipe-section ul li:last-child { border-bottom: none; }
+    .recipe-steps p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── SIGNATURE ── */
+    .signature-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .signature-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center;
+    }
+    .signature-img { position: relative; overflow: hidden; }
+    .signature-img img {
+      width: 100%; height: 500px; object-fit: cover;
+      filter: brightness(.65);
+    }
+    .signature-cocktail h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 300; margin-bottom: 1.5rem;
+    }
+    .signature-cocktail p { color: var(--muted); margin-bottom: 1rem; font-size: .95rem; }
+    .ingredient-list { margin: 2rem 0; }
+    .ingredient {
+      display: flex; justify-content: space-between;
+      padding: .7rem 0; border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .ingredient span:last-child { color: var(--accent); }
+    .method-steps { margin-top: 1.5rem; }
+    .step {
+      display: flex; gap: 1rem; margin-bottom: 1rem;
+    }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; color: var(--accent); min-width: 28px;
+      line-height: 1;
+    }
+    .step-text { font-size: .9rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; letter-spacing: .12em; color: var(--accent);
+    }
+    .footer-copy { font-size: .75rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: .75rem; color: var(--muted);
+      text-decoration: none; letter-spacing: .1em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-img { height: 50vh; }
+      .hero-img::after { background: linear-gradient(to bottom, var(--bg) 0%, transparent 40%); }
+      .hero-text { padding: 3rem 2rem; }
+      section { padding: 4rem 2rem; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      .cocktail-grid { grid-template-columns: 1fr 1fr; }
+      .signature-grid { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .cocktail-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .gallery-strip img { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">V.A.</a>
+  <ul class="nav-links">
+    <li><a href="#about">О себе</a></li>
+    <li><a href="#cocktails">Коктейли</a></li>
+    <li><a href="#signature">Авторский</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0; padding-top:80px;">
+  <div class="hero-text">
+    <p class="hero-label">Бармен &amp; Изобретатель вкусов</p>
+    <h1 class="hero-title">Vahan<br/><em>Asoyan</em></h1>
+    <p class="hero-desc">
+      Десять лет за стойкой. Каждый коктейль — это история,
+      рассказанная через вкус, аромат и текстуру.
+      Классика как фундамент, эксперимент как вдохновение.
+    </p>
+    <a href="#cocktails" class="btn">Смотреть коктейли →</a>
+  </div>
+  <div class="hero-img">
+    <img
+      src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=900&q=80"
+      alt="Bartender at work"
+    />
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <img src="https://images.unsplash.com/photo-1470338745628-171cf53de3a8?w=600&q=75" alt="bar atmosphere" />
+  <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=75" alt="cocktail close-up" />
+  <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=600&q=75" alt="bar shelf" />
+  <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?w=600&q=75" alt="mixing cocktail" />
+  <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=600&q=75" alt="night bar" />
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-images">
+      <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?w=600&q=80" alt="bartender portrait" />
+      <img src="https://images.unsplash.com/photo-1609951651556-5334e2706168?w=400&q=80" alt="shaking cocktail" />
+      <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&q=80" alt="cocktail glass" />
+    </div>
+    <div class="about-text">
+      <p class="section-label">Биография</p>
+      <h2 class="section-title">Страсть,<br/>рождённая у стойки</h2>
+      <div class="divider"></div>
+      <p>
+        Начал работать барменом в 19 лет в небольшом джаз-баре Санкт-Петербурга.
+        То, что началось как подработка, превратилось в призвание.
+      </p>
+      <p>
+        Учился у лучших: прошёл стажировку в Лондоне, работал на фестивале Tales of the Cocktail
+        в Новом Орлеане. Каждая страна оставила свой след в моих рецептах.
+      </p>
+      <p>
+        Сегодня разрабатываю авторские коктейли, объединяя классические техники
+        с современными ингредиентами — ферментами, дымом, нестандартными настойками.
+      </p>
+      <div class="stats">
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Лет опыта</div>
+        </div>
+        <div>
+          <div class="stat-num">80+</div>
+          <div class="stat-label">Авторских рецептов</div>
+        </div>
+        <div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">Наград</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COCKTAILS -->
+<section id="cocktails" style="padding-top: 2rem;">
+  <div class="cocktails-header">
+    <div>
+      <p class="section-label">Классика</p>
+      <h2 class="section-title">Великие коктейли<br/>всех времён</h2>
+      <div class="divider" style="margin-bottom:0"></div>
+    </div>
+    <p style="color:var(--muted); font-size:.85rem; max-width:220px; text-align:right;">
+      Наведите курсор на карточку, чтобы увидеть рецепт
+    </p>
+  </div>
+
+  <div class="cocktail-grid">
+
+    <!-- Negroni -->
+    <div class="cocktail-card">
+      <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=80" alt="Negroni" />
+      <div class="cocktail-info">
+        <div class="cocktail-name">Negroni</div>
+        <div class="cocktail-tag">Классика 1919 · Stirred</div>
+      </div>
+      <div class="cocktail-recipe">
+        <h3>Negroni</h3>
+        <div class="recipe-section">
+          <h4>Ингредиенты</h4>
+          <ul>
+            <li>Джин — 30 мл</li>
+            <li>Кампари — 30 мл</li>
+            <li>Сладкий вермут — 30 мл</li>
+            <li>Апельсиновая цедра</li>
+          </ul>
+        </div>
+        <div class="recipe-section recipe-steps">
+          <h4>Приготовление</h4>
+          <p>Перемешать все ингредиенты со льдом в стакане для смешивания 30 секунд. Процедить в охлаждённый бокал Old Fashioned с крупным кубом льда. Украсить цедрой апельсина.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Old Fashioned -->
+    <div class="cocktail-card">
+      <img src="https://images.unsplash.com/photo-1527761939622-933c2a7c4ebc?w=600&q=80" alt="Old Fashioned" />
+      <div class="cocktail-info">
+        <div class="cocktail-name">Old Fashioned</div>
+        <div class="cocktail-tag">Классика 1880 · Stirred</div>
+      </div>
+      <div class="cocktail-recipe">
+        <h3>Old Fashioned</h3>
+        <div class="recipe-section">
+          <h4>Ингредиенты</h4>
+          <ul>
+            <li>Бурбон или ржаной виски — 60 мл</li>
+            <li>Сахарный сироп — 10 мл</li>
+            <li>Ангостура биттер — 2 даша</li>
+            <li>Апельсиновая цедра, вишня</li>
+          </ul>
+        </div>
+        <div class="recipe-section recipe-steps">
+          <h4>Приготовление</h4>
+          <p>В бокал положить сахар, добавить биттер и немного воды. Растворить ложкой, добавить лёд и виски. Аккуратно перемешать. Выразить аромат цедры апельсина над бокалом.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Margarita -->
+    <div class="cocktail-card">
+      <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80" alt="Margarita" />
+      <div class="cocktail-info">
+        <div class="cocktail-name">Margarita</div>
+        <div class="cocktail-tag">Классика 1938 · Shaken</div>
+      </div>
+      <div class="cocktail-recipe">
+        <h3>Margarita</h3>
+        <div class="recipe-section">
+          <h4>Ингредиенты</h4>
+          <ul>
+            <li>Текила бланко — 50 мл</li>
+            <li>Triple Sec / Cointreau — 20 мл</li>
+            <li>Свежий сок лайма — 20 мл</li>
+            <li>Соль для ободка</li>
+          </ul>
+        </div>
+        <div class="recipe-section recipe-steps">
+          <h4>Приготовление</h4>
+          <p>Натереть ободок бокала лаймом, обмакнуть в крупную соль. Все ингредиенты встряхнуть со льдом 12–15 секунд. Процедить двойным методом в бокал Margarita или купе.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Espresso Martini -->
+    <div class="cocktail-card">
+      <img src="https://images.unsplash.com/photo-1606767799936-08a44f3a5e7a?w=600&q=80" alt="Espresso Martini" />
+      <div class="cocktail-info">
+        <div class="cocktail-name">Espresso Martini</div>
+        <div class="cocktail-tag">Классика 1983 · Shaken</div>
+      </div>
+      <div class="cocktail-recipe">
+        <h3>Espresso Martini</h3>
+        <div class="recipe-section">
+          <h4>Ингредиенты</h4>
+          <ul>
+            <li>Водка — 40 мл</li>
+            <li>Кофейный ликёр Kahlúa — 20 мл</li>
+            <li>Свежий эспрессо — 30 мл (горячий)</li>
+            <li>Сахарный сироп — 5 мл</li>
+            <li>3 кофейных зерна для украшения</li>
+          </ul>
+        </div>
+        <div class="recipe-section recipe-steps">
+          <h4>Приготовление</h4>
+          <p>Заварить свежий эспрессо и дать остыть. Все ингредиенты встряхнуть сильно с мелкодроблёным льдом 15 секунд для пышной пены. Процедить двойным методом в бокал Martini. Украсить тремя зёрнами.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mojito -->
+    <div class="cocktail-card">
+      <img src="https://images.unsplash.com/photo-1625666699900-0a97f3e2fd7e?w=600&q=80" alt="Mojito" />
+      <div class="cocktail-info">
+        <div class="cocktail-name">Mojito</div>
+        <div class="cocktail-tag">Классика 1800-х · Build</div>
+      </div>
+      <div class="cocktail-recipe">
+        <h3>Mojito</h3>
+        <div class="recipe-section">
+          <h4>Ингредиенты</h4>
+          <ul>
+            <li>Белый ром — 45 мл</li>
+            <li>Свежий сок лайма — 20 мл</li>
+            <li>Тростниковый сахар — 15 мл</li>
+            <li>Листья мяты — 8–10 шт.</li>
+            <li>Газированная вода</li>
+          </ul>
+        </div>
+        <div class="recipe-section recipe-steps">
+          <h4>Приготовление</h4>
+          <p>Мяту аккуратно размять с сахаром и лаймом в высоком бокале. Добавить ром и колотый лёд. Долить содовой. Аккуратно перемешать. Украсить веточкой мяты и долькой лайма.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dry Martini -->
+    <div class="cocktail-card">
+      <img src="https://images.unsplash.com/photo-1560508180-03f285f67ded?w=600&q=80" alt="Dry Martini" />
+      <div class="cocktail-info">
+        <div class="cocktail-name">Dry Martini</div>
+        <div class="cocktail-tag">Классика 1900-х · Stirred</div>
+      </div>
+      <div class="cocktail-recipe">
+        <h3>Dry Martini</h3>
+        <div class="recipe-section">
+          <h4>Ингредиенты</h4>
+          <ul>
+            <li>Джин London Dry — 60 мл</li>
+            <li>Сухой вермут — 10 мл</li>
+            <li>Оливка или лимонная цедра</li>
+          </ul>
+        </div>
+        <div class="recipe-section recipe-steps">
+          <h4>Приготовление</h4>
+          <p>Охладить бокал Martini льдом. Перемешать джин и вермут со льдом 45 секунд до идеальной температуры −2°C. Процедить в охлаждённый бокал. Украсить по вкусу — оливкой или цедрой лимона.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SIGNATURE COCKTAIL -->
+<section id="signature" class="signature-section">
+  <div class="signature-grid">
+    <div class="signature-img">
+      <img src="https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?w=800&q=80" alt="signature cocktail" />
+    </div>
+    <div class="signature-cocktail">
+      <p class="section-label">Авторский коктейль</p>
+      <h2 class="section-title" style="font-size:2.4rem">«Золотой<br/>туман»</h2>
+      <div class="divider"></div>
+      <p>
+        Мой флагманский коктейль. Вдохновлён туманными осенними утрами
+        на берегу Невы. Горький мёд, дымный виски и цветочный вермут —
+        три характера в одном бокале.
+      </p>
+
+      <div class="ingredient-list">
+        <div class="ingredient"><span>Scotch Single Malt (smoky)</span><span>45 мл</span></div>
+        <div class="ingredient"><span>Медовый сироп с тимьяном</span><span>15 мл</span></div>
+        <div class="ingredient"><span>Сухой цветочный вермут</span><span>20 мл</span></div>
+        <div class="ingredient"><span>Ангостура биттер</span><span>1 даш</span></div>
+        <div class="ingredient"><span>Апельсиновые биттеры</span><span>2 даша</span></div>
+        <div class="ingredient"><span>Цедра грейпфрута</span><span>для украшения</span></div>
+      </div>
+
+      <div class="method-steps">
+        <p class="section-label" style="margin-bottom:1rem">Метод</p>
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-text">Охладить бокал Old Fashioned, наполнив его льдом на 5 минут.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-text">В миксинг-гласс добавить все ингредиенты и перемешивать со льдом 40 секунд.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-text">Убрать лёд из бокала, процедить коктейль через стрейнер.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-text">Выразить масла цедры грейпфрута над бокалом, провести по ободку и опустить внутрь.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Vahan Asoyan</div>
+  <div class="footer-copy">© 2024 — Все рецепты авторские</div>
+  <nav class="footer-links">
+    <a href="#about">О себе</a>
+    <a href="#cocktails">Коктейли</a>
+    <a href="#signature">Авторский</a>
+  </nav>
+</footer>
+
+</body>
+</html>
